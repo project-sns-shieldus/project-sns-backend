@@ -39,7 +39,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public List<Image> getImagesByPostId(Long postId) {
-        return imageRepository.findByPostId(postId);
+        return imageRepository.findByPost_PostId(postId);
     }
 
     @Override

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ImageRepository extends JpaRepository<Image, Long> {
 
-    List<Image> findByPostId(Long postId); // 특정 게시물의 모든 이미지 반환
+    List<Image> findByPost_PostId(Long postId); // 특정 게시물의 모든 이미지 반환
 }
