@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Override
-    public User getUser(Integer userId) {
+    public User getUser(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new NoSuchElementException("User not found with ID: " + userId));
     }
@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(Integer userId, User user) {
+    public User updateUser(Long userId, User user) {
 
         User existingUser = userRepository.findById(userId)
                 .orElseThrow(() -> new NoSuchElementException("User not found with ID: " + userId));
@@ -55,12 +55,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(Integer userId) {
+    public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
     }
 
     @Override
-    public void addFollower(Integer userId, Integer followerId) {
+    public void addFollower(Long userId, Long followerId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NoSuchElementException("User not found with ID: " + userId));
 
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void deleteFollower(Integer userId, Integer followerId) {
+    public void deleteFollower(Long userId, Long followerId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NoSuchElementException("User not found with ID: " + userId));
 
@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addFollowing(Integer userId, Integer followingId) {
+    public void addFollowing(Long userId, Long followingId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NoSuchElementException("User not found with ID: " + userId));
 
@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteFollowing(Integer userId, Integer followingId) {
+    public void deleteFollowing(Long userId, Long followingId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NoSuchElementException("User not found with ID: " + userId));
 

@@ -4,19 +4,19 @@ import com.delta.delta.entity.User;
 
 public interface UserService {
 
-    User getUser(Integer userId);
+    User getUser(Long userId);
 
     User createUser(User user);
 
-    User updateUser(Integer userId, User user);
+    User updateUser(Long userId, User user);
 
-    void deleteUser(Integer userId);
+    void deleteUser(Long userId);
 
-    void addFollower(Integer userId, Integer followerId);
+    void addFollower(Long userId, Long followerId);
 
-    void deleteFollower(Integer userId, Integer followerId);
+    void deleteFollower(Long userId, Long followerId);
 
-    void addFollowing(Integer userId, Integer followingId);
+    void addFollowing(Long userId, Long followingId);
 
-    void deleteFollowing(Integer userId, Integer followingId);
+    void deleteFollowing(Long userId, Long followingId);
 }
