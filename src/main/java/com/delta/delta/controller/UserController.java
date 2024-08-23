@@ -24,12 +24,31 @@ public class UserController {
 
     @PatchMapping("/{userId}")
     public User updateUser(@PathVariable Integer userId, @RequestBody User user) {
-        user.setUserId(userId); // Ensure the userId is set
-        return userService.updateUser(user);
+        return userService.updateUser(userId, user);
     }
 
     @DeleteMapping("/{userId}")
     public void deleteUser(@PathVariable Integer userId) {
         userService.deleteUser(userId);
+    }
+
+    @PostMapping("/addFollower/{userId}/{followerId}")
+    public void addFollower(@PathVariable Integer userId, @PathVariable Integer followerId) {
+        userService.addFollower(userId, followerId);
+    }
+
+    @PostMapping("/deleteFollower/{userId}/{followerId}")
+    public void deleteFollower(@PathVariable Integer userId, @PathVariable Integer followerId) {
+        userService.deleteFollower(userId, followerId);
+    }
+
+    @PostMapping("/addFollowing/{userId}/{followingId}")
+    public void addFollowing(@PathVariable Integer userId, @PathVariable Integer followingId) {
+        userService.addFollowing(userId, followingId);
+    }
+
+    @PostMapping("/deleteFollowing/{userId}/{followingId}")
+    public void deleteFollowing(@PathVariable Integer userId, @PathVariable Integer followingId) {
+        userService.deleteFollowing(userId, followingId);
     }
 }
