@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface PostLikeRepository extends JpaRepository<PostLike, Integer> {
+public interface PostLikeRepository extends JpaRepository<PostLike, Long> {
 
     List<PostLike> findByPostId(Long postId); //게시물의 모든 좋아요 반환
     List<PostLike> findByUserId(Long userId); //사용자의 모든 좋아요 반환
