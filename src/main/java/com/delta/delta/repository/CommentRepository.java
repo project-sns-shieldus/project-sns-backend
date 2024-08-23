@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-    // 기본적인 데이터 접근 로직입니다~ 특정 게시물/사용자의 comment 모두 반환
-    List<Comment> findByPostId(Long postId);
-    List<Comment> findByUserId(Long userId);
+    // 특정 게시물의 모든 댓글 반환
+    List<Comment> findByPost_PostId(Long postId);
+
+    // 특정 사용자의 모든 댓글 반환
+    List<Comment> findByUser_UserId(Long userId);
 }

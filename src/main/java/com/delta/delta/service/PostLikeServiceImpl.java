@@ -28,7 +28,7 @@ public class PostLikeServiceImpl implements PostLikeService {
     @Override
     @Transactional
     public PostLike likePost(Long postId, Long userId) {
-        if (postLikeRepository.existsByPostIdAndUserId(postId, userId)) {
+        if (postLikeRepository.existsByPost_PostIdAndUser_UserId(postId, userId)) {
             throw new RuntimeException("사용자가 이미 해당 게시물에 좋아요를 눌렀습니다: postId=" + postId + ", userId=" + userId);
         }
 
@@ -61,7 +61,7 @@ public class PostLikeServiceImpl implements PostLikeService {
 
     @Override
     public List<PostLike> getLikesByPostId(Long postId) {
-        return postLikeRepository.findByPostId(postId);
+        return postLikeRepository.findByPost_PostId(postId);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class PostLikeServiceImpl implements PostLikeService {
 
     @Override
     public List<PostLike> getLikesByUserId(Long userId) {
-        return postLikeRepository.findByUserId(userId);
+        return postLikeRepository.findByUser_UserId(userId);
     }
 }
 
