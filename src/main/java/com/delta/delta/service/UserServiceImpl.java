@@ -3,16 +3,18 @@ package com.delta.delta.service;
 import com.delta.delta.entity.User;
 import com.delta.delta.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository;
 
     @Override
-    public User getUser(Integer userId) {
+    public User getUser(Long userId) {
         return userRepository.findById(userId).orElse(null);
     }
 
@@ -58,7 +60,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(Integer userId) {
+    public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
     }
 }

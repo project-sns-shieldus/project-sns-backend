@@ -13,7 +13,7 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/{userId}")
-    public User getUser(@PathVariable Integer userId) {
+    public User getUser(@PathVariable Long userId) {
         return userService.getUser(userId);
     }
 
@@ -23,13 +23,13 @@ public class UserController {
     }
 
     @PatchMapping("/{userId}")
-    public User updateUser(@PathVariable Integer userId, @RequestBody User user) {
+    public User updateUser(@PathVariable Long userId, @RequestBody User user) {
         user.setUserId(userId); // Ensure the userId is set
         return userService.updateUser(user);
     }
 
     @DeleteMapping("/{userId}")
-    public void deleteUser(@PathVariable Integer userId) {
+    public void deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
     }
 }

@@ -41,7 +41,7 @@ public class CommentServiceImpl implements CommentService {
                     .build();
             return commentRepository.save(comment);
         } else {
-            throw new RuntimeException("해당 ID의 포스트 또는 유저를 찾지 못했습니다: postId=" + postId + ", userId=" + userId);
+            throw new RuntimeException("해당 ID의 포스팅 또는 유저를 찾지 못했습니다: postId=" + postId + ", userId=" + userId);
         }
     }
 
