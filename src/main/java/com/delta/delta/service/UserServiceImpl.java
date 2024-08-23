@@ -5,7 +5,8 @@ import com.delta.delta.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -15,27 +16,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(Long userId) {
-        return userRepository.findById(userId).orElse(null);
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("User not found with ID: " + userId));
     }
 
     @Override
     public User createUser(User user) {
-        if (userRepository.existsById(user.getUserId())) {
-            return null; // 409 Conflict if user already exists
-        }
         return userRepository.save(user);
     }
 
     @Override
-    public User updateUser(User user) {
+    public User updateUser(Long userId, User user) {
 
-        Optional<User> userOptional = userRepository.findById(user.getUserId());
-
-        if (userOptional.isEmpty()) {
-            return null; // 404 Not Found if user doesn't exist
-        }
-
-        User existingUser = userOptional.get();
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("User not found with ID: " + userId));
 
         if (user.getUsername() != null) {
             existingUser.setUsername(user.getUsername());
@@ -55,6 +49,7 @@ public class UserServiceImpl implements UserService {
         if (user.getProfileImage() != null) {
             existingUser.setProfileImage(user.getProfileImage());
         }
+        existingUser.setUpdatedAt(LocalDateTime.now());
 
         return userRepository.save(existingUser);
     }
@@ -62,5 +57,50 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
+    }
+
+    @Override
+    public void addFollower(Long userId, Long followerId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("User not found with ID: " + userId));
+
+        if (!userId.equals(followerId)) {
+            user.getFollowers().add(followerId);
+            userRepository.save(user);
+        } else {
+            throw new IllegalArgumentException("A user cannot follow themselves.");
+        }
+    }
+
+
+    @Override
+    public void deleteFollower(Long userId, Long followerId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("User not found with ID: " + userId));
+
+        user.getFollowers().remove(followerId);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void addFollowing(Long userId, Long followingId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("User not found with ID: " + userId));
+
+        if (!userId.equals(followingId)) {
+            user.getFollowings().add(followingId);
+            userRepository.save(user);
+        } else {
+            throw new IllegalArgumentException("A user cannot follow themselves.");
+        }
+    }
+
+    @Override
+    public void deleteFollowing(Long userId, Long followingId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("User not found with ID: " + userId));
+
+        user.getFollowings().remove(followingId);
+        userRepository.save(user);
     }
 }

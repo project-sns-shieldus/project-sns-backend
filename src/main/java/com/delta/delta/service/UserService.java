@@ -1,7 +1,6 @@
 package com.delta.delta.service;
 
 import com.delta.delta.entity.User;
-import org.springframework.stereotype.Service;
 
 public interface UserService {
 
@@ -9,7 +8,15 @@ public interface UserService {
 
     User createUser(User user);
 
-    User updateUser(User user);
+    User updateUser(Long userId, User user);
 
     void deleteUser(Long userId);
+
+    void addFollower(Long userId, Long followerId);
+
+    void deleteFollower(Long userId, Long followerId);
+
+    void addFollowing(Long userId, Long followingId);
+
+    void deleteFollowing(Long userId, Long followingId);
 }
