@@ -31,12 +31,12 @@ public class User {
     @ElementCollection
     @CollectionTable(name = "user_followers", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "follower_id")
-    private Set<Integer> followers = new HashSet<>();
+    private Set<Long> followers = new HashSet<>();
 
     @ElementCollection
     @CollectionTable(name = "user_followings", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "following_id")
-    private Set<Integer> followings = new HashSet<>();
+    private Set<Long> followings = new HashSet<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
