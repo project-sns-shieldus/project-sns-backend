@@ -34,7 +34,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         log.info("Request URI: {}", request.getRequestURI());
 
         String uri = request.getRequestURI();
-        if (uri.equals("/api/auth/login") || uri.equals("/api/user")) {
+        if (uri.equals("/api/auth/login") || uri.equals("/api/auth/register")) {
             log.info("Skipping JWT filter for {}", uri);
             chain.doFilter(request, response);
             return;
