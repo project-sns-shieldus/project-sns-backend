@@ -1,5 +1,6 @@
 package com.delta.delta.entity;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,14 +32,18 @@ public class User implements UserDetails {
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt;
 
+    // postLike, comment와 동일한 논리로 인해 include 도입
     @ElementCollection
     @CollectionTable(name = "user_followers", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "follower_id")
+    @JsonIncludeProperties({"userId", "username", "firstname", "lastname", "profileImage"})
     private Set<Long> followers = new HashSet<>();
+
 
     @ElementCollection
     @CollectionTable(name = "user_followings", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "following_id")
+    @JsonIncludeProperties({"userId", "username", "firstname", "lastname", "profileImage"})
     private Set<Long> followings = new HashSet<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
