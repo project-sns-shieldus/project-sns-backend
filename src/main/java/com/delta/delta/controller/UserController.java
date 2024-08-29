@@ -18,6 +18,11 @@ public class UserController {
         return userService.getUser(userId);
     }
 
+    @GetMapping
+    public User getUserByUsername(@RequestParam String name) {
+        return userService.getUserByUsername(name);
+    }
+
     // 유저 정보 생성
     @PostMapping
     public User createUser(@RequestBody User user) {
