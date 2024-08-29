@@ -2,6 +2,7 @@ package com.delta.delta.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -31,7 +32,7 @@ public class Post {
             optional = false
     )
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonBackReference
+    @JsonIncludeProperties({"userId", "profileImage", "username", "createdAt"})
     private User user;
 
     @Column(columnDefinition = "TEXT", nullable = false)
