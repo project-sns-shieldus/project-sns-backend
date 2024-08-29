@@ -34,13 +34,15 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         log.info("Request URI: {}", request.getRequestURI());
 
         String uri = request.getRequestURI();
-        if (uri.equals("/api/auth/login") || uri.equals("/api/auth/register")) {
+
+        // 필터링에서 제외할 경로들
+        if (uri.equals("/api/auth/login") || uri.equals("/api/auth/register") || uri.startsWith("/uploads/")) {
             log.info("Skipping JWT filter for {}", uri);
             chain.doFilter(request, response);
             return;
         }
 
-        // The rest of the filter logic...
+        // JWT 토큰 검증 로직
         final String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         String subject = null;
         String jwt = null;
@@ -73,4 +75,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
     }
 
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getRequestURI();
+        return path.startsWith("/uploads/");  // 이 경로에 대해서는 필터링을 하지 않음
+    }
+
 }
+

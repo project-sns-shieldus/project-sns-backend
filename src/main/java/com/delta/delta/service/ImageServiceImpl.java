@@ -7,7 +7,10 @@ import com.delta.delta.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,15 +25,18 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     @Transactional
-    public Image createImage(Long postId, String fileName) {
+    public Image createImage(Long postId, MultipartFile file, String uniqueFileName) {
         Optional<Post> postOptional = postRepository.findById(postId);
 
         if (postOptional.isPresent()) {
             Post post = postOptional.get();
+
+            // Image 엔티티 생성
             Image image = Image.builder()
                     .post(post)
-                    .fileName(fileName)
+                    .fileName(uniqueFileName)  // 또는 저장된 파일 경로
                     .build();
+
             return imageRepository.save(image);
         } else {
             throw new RuntimeException("해당 ID의 포스팅을 찾지 못했습니다: postId=" + postId);

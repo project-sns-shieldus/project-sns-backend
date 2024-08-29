@@ -34,15 +34,18 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password) {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(username, password)
+            );
 
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            User user = userService.getUserByUsername(username);  // Implement this method in UserService
+            User user = userService.getUserByUsername(username);
 
             String token = jwtUtils.generateToken(user);
 
             Map<String, String> response = new HashMap<>();
             response.put("token", token);
+            response.put("userId", String.valueOf(user.getUserId()));
 
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
