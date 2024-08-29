@@ -78,8 +78,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
-        return path.startsWith("/uploads/");  // 이 경로에 대해서는 필터링을 하지 않음
+        // "/uploads/" 및 "/ws/chat" 경로에 대해서는 필터링을 하지 않음
+        return path.startsWith("/uploads/") || path.startsWith("/ws/chat");
     }
-
 }
+
 
