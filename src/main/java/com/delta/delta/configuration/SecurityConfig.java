@@ -8,11 +8,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
@@ -34,17 +35,32 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
-                        .anyRequest().authenticated()
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(authorizeRequests ->
+                        authorizeRequests
+                                .requestMatchers("/api/auth/login", "/api/auth/register", "/uploads/**", "/api/user/**").permitAll() // 인증 없이 접근 가능
+                                .anyRequest().authenticated() // 기타 요청은 인증 필요
                 )
-                .csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement((auth) -> auth
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Use stateless session
-                );
-
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+                .sessionManagement(sessionManagement ->
+                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**") // 모든 경로에 대해 CORS 적용
+                        .allowedOrigins("http://localhost:3000") // 프론트엔드 주소
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
+            }
+        };
+
     }
 }
