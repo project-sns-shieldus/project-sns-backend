@@ -8,4 +8,11 @@ spring.datasource.url=jdbc:mysql://localhost:3306/DeltaDB?createDatabaseIfNotExi
 spring.datasource.username={id}
 spring.datasource.password={password}
 spring.jpa.hibernate.ddl-auto=update
+
+token.secret={토큰 secret}
+# 24h = 24 * 60 * 60 * 1000 = 86,400,000
+token.expiration-time=86400000
+
+spring.mvc.static-path-pattern=/uploads/**
+spring.web.resources.static-locations=classpath:/static/uploads/
 ```
