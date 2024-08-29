@@ -36,7 +36,7 @@ public class Comment {
     // 추후 서비스 구체화 협의 후 코드를 결정하겠습니다.
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonIncludeProperties({"userId", "profileImage", "firstname" ,"lastname", "createdAt"})
+    @JsonIncludeProperties({"userId", "profileImage", "username", "createdAt"})
     private User user;
 
     @Column(columnDefinition = "VARCHAR(200)", nullable = false)
