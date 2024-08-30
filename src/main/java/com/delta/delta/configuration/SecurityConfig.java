@@ -39,6 +39,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/api/auth/login", "/api/auth/register", "/uploads/**", "/api/user/**").permitAll() // 인증 없이 접근 가능
+                                .requestMatchers("/ws/chat/**").permitAll() // WebSocket 경로 예외 처리
                                 .anyRequest().authenticated() // 기타 요청은 인증 필요
                 )
                 .sessionManagement(sessionManagement ->
@@ -61,6 +62,6 @@ public class SecurityConfig {
                         .allowCredentials(true);
             }
         };
-
     }
 }
+
