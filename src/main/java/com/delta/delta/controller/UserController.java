@@ -12,15 +12,16 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    // 유저 정보 호출
+    // 유저 정보 호출 (ID로 검색)
     @GetMapping("/{userId}")
     public User getUser(@PathVariable Long userId) {
         return userService.getUser(userId);
     }
 
-    @GetMapping
-    public User getUserByUsername(@RequestParam String name) {
-        return userService.getUserByUsername(name);
+    // 유저 정보 호출 (이름으로 검색)
+    @GetMapping("/username/{userName}")
+    public User getUserByUsername(@PathVariable String userName) {
+        return userService.getUserByUsername(userName);
     }
 
     // 유저 정보 생성
