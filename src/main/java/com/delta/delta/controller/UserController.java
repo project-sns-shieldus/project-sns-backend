@@ -41,27 +41,17 @@ public class UserController {
         userService.deleteUser(userId);
     }
 
-    // 팔로워 추가
-    @PostMapping("/addFollower/{userId}/{followerId}")
-    public void addFollower(@PathVariable Long userId, @PathVariable Long followerId) {
-        userService.addFollower(userId, followerId);
-    }
-
-    // 팔로워 삭제
-    @PostMapping("/deleteFollower/{userId}/{followerId}")
-    public void deleteFollower(@PathVariable Long userId, @PathVariable Long followerId) {
-        userService.deleteFollower(userId, followerId);
-    }
-
     // 팔로우 추가
     @PostMapping("/addFollowing/{userId}/{followingId}")
     public void addFollowing(@PathVariable Long userId, @PathVariable Long followingId) {
         userService.addFollowing(userId, followingId);
+        userService.addFollower(followingId, userId);
     }
 
     // 팔로우 삭제
     @PostMapping("/deleteFollowing/{userId}/{followingId}")
     public void deleteFollowing(@PathVariable Long userId, @PathVariable Long followingId) {
         userService.deleteFollowing(userId, followingId);
+        userService.deleteFollower(followingId, userId);
     }
 }
